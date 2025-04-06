@@ -160,6 +160,7 @@ function modoOscuro() {
         elemento.style.color = 'white'
     })
     document.querySelectorAll('span').color = 'white'
+    RESULTADO.style.backgroundColor = 'darkgoldenrod'
 }
 
 function modoClaro() {
@@ -187,6 +188,7 @@ function modoClaro() {
         elemento.style.color = 'black'
     })
     document.querySelectorAll('span').color = 'black'
+    RESULTADO.style.backgroundColor = 'lightblue'
 }
 
 function analisisDarkMode() {

@@ -58,7 +58,8 @@ span {
 }
 
 #resultado {
-    width: 80%;
+    /* width: 80%; */
+    width: 90%;
     margin-top: 20px;
     background-color: lightblue;
     border-radius: 15px;
