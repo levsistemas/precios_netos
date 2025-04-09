@@ -11,61 +11,67 @@ const LIGHT_DISABLED_BACKGROUND = 'rgba(239, 239, 239, 0.3)'
 const LIGHT_ENABLED_COLOR = 'rgb(0, 0, 0)'
 const LIGHT_ENABLED_BACKGROUND = 'rgb(240, 240, 240)'
 
-BTN_CALCULO.disabled=true
-BTN_LIMPIAR.disabled=true
+BTN_CALCULO.disabled = true
+BTN_LIMPIAR.disabled = true
+
+window.addEventListener('resize', () => {
+    CONTAINER_DARKMODE.style.position = 'absolute'
+    CONTAINER_DARKMODE.style.top = '25px'
+    CONTAINER_DARKMODE.style.left = document.body.offsetWidth - CONTAINER_DARKMODE.offsetWidth - 20 + 'px'
+})
 
 CONTAINER_DARKMODE.style.position = 'absolute'
-CONTAINER_DARKMODE.style.top = '15%'
+CONTAINER_DARKMODE.style.top = '25px'
 CONTAINER_DARKMODE.style.left = document.body.offsetWidth - CONTAINER_DARKMODE.offsetWidth - 20 + 'px'
 
 document.getElementById('precio').addEventListener('input', () => {
-    if(document.getElementById('precio').value!="" && document.getElementById('porcentaje').value!=""){
-        BTN_CALCULO.disabled=false
-        BTN_LIMPIAR.disabled=false
+    if (document.getElementById('precio').value != "" && document.getElementById('porcentaje').value != "") {
+        BTN_CALCULO.disabled = false
+        BTN_LIMPIAR.disabled = false
         analisisDarkMode()
     } else {
-        BTN_CALCULO.disabled=true
+        BTN_CALCULO.disabled = true
         analisisDarkMode()
     }
 
-    if(document.getElementById('precio').value=="" && document.getElementById('porcentaje').value==""){
-        BTN_LIMPIAR.disabled=true
+    if (document.getElementById('precio').value == "" && document.getElementById('porcentaje').value == "") {
+        BTN_LIMPIAR.disabled = true
         analisisDarkMode()
     }
 
-    if(document.getElementById('precio').value!="") {
-        BTN_LIMPIAR.disabled=false
+    if (document.getElementById('precio').value != "") {
+        BTN_LIMPIAR.disabled = false
         analisisDarkMode()
     }
 
-    if(document.getElementById('porcentaje').value!="") {
-        BTN_LIMPIAR.disabled=false
+    if (document.getElementById('porcentaje').value != "") {
+        BTN_LIMPIAR.disabled = false
         analisisDarkMode()
     }
 })
 
 document.getElementById('porcentaje').addEventListener('input', () => {
-    if(document.getElementById('precio').value!="" && document.getElementById('porcentaje').value!=""){
-        BTN_CALCULO.disabled=false
-        BTN_LIMPIAR.disabled=false
+    if (document.getElementById('precio').value != "" && document.getElementById('porcentaje').value != "") {
+        BTN_CALCULO.disabled = false
+        BTN_LIMPIAR.disabled = false
         analisisDarkMode()
     } else {
-        BTN_CALCULO.disabled=true
+        BTN_CALCULO.disabled = true
         analisisDarkMode()
     }
 
-    if(document.getElementById('precio').value=="" && document.getElementById('porcentaje').value==""){
-        BTN_LIMPIAR.disabled=true
+    if (document.getElementById('precio').value == "" && document.getElementById('porcentaje').value == "") {
+        BTN_LIMPIAR.disabled = true
         analisisDarkMode()
     }
 
-    if(document.getElementById('precio').value!="") {
-        BTN_LIMPIAR.disabled=false
+    if (document.getElementById('precio').value != "") {
+        BTN_LIMPIAR.disabled = false
         analisisDarkMode()
     }
 
-    if(document.getElementById('porcentaje').value!="") {
-        BTN_LIMPIAR.disabled=false
+    if (document.getElementById('porcentaje').value != "") {
+        BTN_LIMPIAR.disabled = false
         analisisDarkMode()
     }
 })
@@ -86,15 +92,15 @@ BTN_CALCULO.addEventListener('click', () => {
 })
 
 document.getElementById('precio').addEventListener('keydown', (e) => {
-    if(e.key == "Enter") {
+    if (e.key == "Enter") {
         document.getElementById('porcentaje').focus()
     }
 })
 
 document.getElementById('porcentaje').addEventListener('keydown', (e) => {
-    if(e.key == 'Enter') {
-        if(BTN_CALCULO.disabled==false && BTN_LIMPIAR.disabled==false) {
-            if(document.getElementById('porcentaje').value.length >= 3) {
+    if (e.key == 'Enter') {
+        if (BTN_CALCULO.disabled == false && BTN_LIMPIAR.disabled == false) {
+            if (document.getElementById('porcentaje').value.length >= 3) {
                 const P = document.createElement('p')
                 P.innerHTML = 'Verifica el porcentaje ingresado...' + document.getElementById('porcentaje').value
                 P.style.backgroundColor = 'red'
@@ -117,7 +123,6 @@ document.getElementById('porcentaje').addEventListener('keydown', (e) => {
 
 BTN_LIMPIAR.addEventListener('click', () => {
     borrarResultados()
-    
 })
 
 DARKMODE.addEventListener('click', () => {
@@ -125,14 +130,14 @@ DARKMODE.addEventListener('click', () => {
 })
 
 function borrarResultados() {
-    document.getElementById('precio').value=""
-    document.getElementById('porcentaje').value=""
-    SPAN_DESCUENTO.innerHTML=""
-    SPAN_PRECIO_NETO.innerHTML=""
+    document.getElementById('precio').value = ""
+    document.getElementById('porcentaje').value = ""
+    SPAN_DESCUENTO.innerHTML = ""
+    SPAN_PRECIO_NETO.innerHTML = ""
     RESULTADO.style.display = 'none'
     document.getElementById('precio').focus()
-    BTN_CALCULO.disabled=true
-    BTN_LIMPIAR.disabled=true
+    BTN_CALCULO.disabled = true
+    BTN_LIMPIAR.disabled = true
     analisisDarkMode()
 }
 
@@ -150,7 +155,7 @@ function modoOscuro() {
     })
     document.querySelectorAll('input[type="button"]').forEach(elemento => {
         elemento.style.backgroundColor = 'blue'
-        if(elemento.disabled==true){
+        if (elemento.disabled == true) {
             elemento.style.color = 'red'
         } else {
             elemento.style.color = 'lightgreen'
@@ -160,12 +165,12 @@ function modoOscuro() {
         elemento.style.color = 'white'
     })
     document.querySelectorAll('span').color = 'white'
-    RESULTADO.style.backgroundColor = 'darkgoldenrod'
+    RESULTADO.style.backgroundColor = 'chocolate'
 }
 
 function modoClaro() {
     document.body.style.backgroundColor = 'white'
-    
+
     document.querySelectorAll('h1').forEach(elemento => {
         elemento.style.color = 'black'
     })
@@ -177,7 +182,7 @@ function modoClaro() {
     })
     document.querySelectorAll('input[type="button"]').forEach(elemento => {
         elemento.style.backgroundColor = 'rgba(239, 239, 239, 0.3)'
-        if(elemento.disabled==true){
+        if (elemento.disabled == true) {
             elemento.style.color = LIGHT_DISABLED_COLOR
             elemento.style.backgroundColor = LIGHT_DISABLED_BACKGROUND
         } else {
@@ -192,7 +197,7 @@ function modoClaro() {
 }
 
 function analisisDarkMode() {
-    if(DARKMODE.checked==true) {
+    if (DARKMODE.checked == true) {
         modoOscuro()
     } else {
         modoClaro()
