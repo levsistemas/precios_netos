@@ -5,6 +5,7 @@ const BTN_LIMPIAR = document.getElementById('limpiar')
 const RESULTADO = document.getElementById('resultado')
 const CONTAINER_DARKMODE = document.getElementById('container_dark')
 const DARKMODE = document.getElementById('darkmode')
+const WARNING = document.getElementById('warning')
 
 const LIGHT_DISABLED_COLOR = 'rgba(16, 16, 16, 0.3)'
 const LIGHT_DISABLED_BACKGROUND = 'rgba(239, 239, 239, 0.3)'
@@ -80,15 +81,19 @@ BTN_CALCULO.addEventListener('click', () => {
     const PRECIO = document.getElementById('precio')
     const PORCENTAJE = parseInt(document.getElementById('porcentaje').value)
 
-    let precio_bruto = parseInt(PRECIO.value)
-    let descuento = precio_bruto * (PORCENTAJE / 100)
-    let precio_neto = precio_bruto - descuento
-
-    SPAN_DESCUENTO.innerHTML = "$" + descuento
-    SPAN_PRECIO_NETO.innerHTML = "$" + precio_neto
-    RESULTADO.style.display = 'flex'
-    RESULTADO.style.flexDirection = 'column'
-    RESULTADO.style.alignItems = 'center'
+    if(verificarPrecio()) {
+        if(verificarPorcentaje()) {
+            let precio_bruto = parseInt(PRECIO.value)
+            let descuento = precio_bruto * (PORCENTAJE / 100)
+            let precio_neto = precio_bruto - descuento
+        
+            SPAN_DESCUENTO.innerHTML = "$" + descuento
+            SPAN_PRECIO_NETO.innerHTML = "$" + precio_neto
+            RESULTADO.style.display = 'flex'
+            RESULTADO.style.flexDirection = 'column'
+            RESULTADO.style.alignItems = 'center'
+        }
+    }
 })
 
 document.getElementById('precio').addEventListener('keydown', (e) => {
@@ -100,23 +105,7 @@ document.getElementById('precio').addEventListener('keydown', (e) => {
 document.getElementById('porcentaje').addEventListener('keydown', (e) => {
     if (e.key == 'Enter') {
         if (BTN_CALCULO.disabled == false && BTN_LIMPIAR.disabled == false) {
-            if (document.getElementById('porcentaje').value.length >= 3) {
-                const P = document.createElement('p')
-                P.innerHTML = 'Verifica el porcentaje ingresado...' + document.getElementById('porcentaje').value
-                P.style.backgroundColor = 'red'
-                P.style.color = 'yellow'
-                P.style.position = 'absolute'
-                P.style.left = '10%'
-                P.style.top = '55%'
-                P.style.fontSize = '1.2em'
-                document.body.appendChild(P)
-                setTimeout(() => {
-                    P.remove()
-                }, 8000)
-                document.getElementById('porcentaje').focus()
-            } else {
-                BTN_CALCULO.click()
-            }
+            BTN_CALCULO.click()
         }
     }
 })
@@ -201,5 +190,52 @@ function analisisDarkMode() {
         modoOscuro()
     } else {
         modoClaro()
+    }
+}
+
+function verificarPrecio() {
+    const PRECIO = document.getElementById('precio')
+    if (PRECIO.value <= 0) {
+        const P = document.createElement('p')
+        P.innerHTML = 'Verifica el precio ingresado...' + PRECIO.value
+        P.style.backgroundColor = 'red'
+        P.style.color = 'yellow'
+        P.style.textAlign = 'center'
+        P.style.fontSize = '1.2em'
+        WARNING.appendChild(P)
+        setTimeout(() => {
+            P.remove()
+            BTN_CALCULO.disabled = false
+            analisisDarkMode()
+        }, 5000)
+        BTN_CALCULO.disabled = true
+        analisisDarkMode()
+        return false
+    } else {
+        return true
+    }
+}
+
+function verificarPorcentaje() {
+    const PORCENTAJE = document.getElementById('porcentaje')
+    if (PORCENTAJE.value.length >= 3 || PORCENTAJE.value < 1) {
+        const P = document.createElement('p')
+        P.innerHTML = 'Verifica el porcentaje ingresado...' + PORCENTAJE.value
+        P.style.backgroundColor = 'red'
+        P.style.color = 'yellow'
+        P.style.textAlign = 'center'
+        P.style.fontSize = '1.2em'
+        WARNING.appendChild(P)
+        setTimeout(() => {
+            P.remove()
+            BTN_CALCULO.disabled = false
+            analisisDarkMode()
+        }, 5000)
+        PORCENTAJE.focus()
+        BTN_CALCULO.disabled = true
+        analisisDarkMode()
+        return false
+    } else {
+        return true
     }
 }
