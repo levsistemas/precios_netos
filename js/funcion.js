@@ -83,12 +83,18 @@ BTN_CALCULO.addEventListener('click', () => {
 
     if(verificarPrecio()) {
         if(verificarPorcentaje()) {
-            let precio_bruto = parseInt(PRECIO.value)
+            let precio_bruto = Number(PRECIO.value)
             let descuento = precio_bruto * (PORCENTAJE / 100)
+            if(descuento.toString().includes(".")){
+                const DESCUENTO = descuento.toString().split(".")
+                const descuentoDecimales = DESCUENTO[1].slice(0,2)
+                descuento = DESCUENTO[0] + "." + descuentoDecimales
+                descuento = Number(descuento)
+            }
             let precio_neto = precio_bruto - descuento
         
-            SPAN_DESCUENTO.innerHTML = "$" + descuento
-            SPAN_PRECIO_NETO.innerHTML = "$" + precio_neto
+            SPAN_DESCUENTO.innerHTML = `$${descuento.toString().includes(".") ? descuento.toFixed(2) : descuento}`
+            SPAN_PRECIO_NETO.innerHTML = `$${precio_neto.toString().includes(".") ? precio_neto.toFixed(2) : precio_neto}`
             RESULTADO.style.display = 'flex'
             RESULTADO.style.flexDirection = 'column'
             RESULTADO.style.alignItems = 'center'
